@@ -1,20 +1,12 @@
 // server.js
-import express from "express";
+export default async function(req, res) {
+  const payload = JSON.parse(req.payload || '{}');
 
-const app = express();
-const PORT = process.env.PORT || 3000;
+  if (payload.path === "/hello") {
+    return res.send({ message: "Hello World!" });
+  } else if (payload.path === "/goodbye") {
+    return res.send({ message: "Goodbye!" });
+  }
 
-// Root route
-app.get("/", (req, res) => {
-  res.send("Hello World 🚀 from Express.js!");
-});
-
-// Another sample route
-app.get("/ping", (req, res) => {
-  res.json({ message: "pong" });
-});
-
-// Start server
-app.listen(PORT, () => {
-  console.log(`✅ Server is running on http://localhost:${PORT}`);
-});
+  return res.send({ message: "Unknown path" });
+}
